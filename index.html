@@ -1,67 +1,135 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Abdelkader Bouadjadja</title>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500&display=block" rel="stylesheet">
   <style>
+    :root {
+      --bg-light: #ffffff;
+      --text-light: #333333;
+      --bg-dark: #121212;
+      --text-dark: #dddddd;
+      --link-light: #007acc;
+      --link-dark: #66ccff;
+      --accent: #888;
+    }
+
+    [data-theme='light'] {
+      background-color: var(--bg-light);
+      color: var(--text-light);
+    }
+
+    [data-theme='dark'] {
+      background-color: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    [data-theme='dark'] a {
+      color: var(--link-dark);
+    }
+
+    [data-theme='light'] a {
+      color: var(--link-light);
+    }
+
     body {
       font-family: Lora, Georgia, serif;
       max-width: 650px;
       margin: 40px auto;
       padding: 0 20px;
       line-height: 1.6;
-      color: #333;
+      transition: background-color 0.3s, color 0.3s;
     }
+
     h1, h2 {
-      font-family: Lora, sans-serif;
-      color: #111;
+      color: inherit;
     }
+
     a {
-      color: #007acc;
       text-decoration: none;
     }
+
     a:hover {
       text-decoration: underline;
     }
+
     code {
       background-color: #f4f4f4;
       padding: 2px 4px;
       border-radius: 3px;
     }
+
     .footer {
       margin-top: 40px;
       font-size: 0.9em;
-      color: #999;
+      color: var(--accent);
+    }
+
+    .dark-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: rgba(0, 0, 0, 0.05);
+      color: #333333;
+      border: 1px solid #333333;
+      border-radius: 4px;
+      padding: 6px 12px;
+      font-size: 0.9em;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s, border 0.3s;
+    }
+
+    [data-theme='dark'] .dark-toggle {
+      background-color: rgba(255, 255, 255, 0.1);
+      color: #dddddd;
+      border-color: #666666;
+    }
+
+    .dark-toggle:hover {
+      background-color: rgba(255, 255, 255, 0.2);
     }
   </style>
 </head>
 <body>
-  <h1>Abdelkader Bouadjadja</h1>
+  <button class="dark-toggle" onclick="toggleTheme()">Toggle Theme</button>
+
+  <h1>Hi, I'm Abdelkader Bouadjadja.</h1>
   <p>
-    I’m a Software Engineering leader/builder passionate about distributed systems, blockchain, and crafting resilient architectures. Currently based in Doha - Qatar, I serve as Director of Engineering at <strong>Nology</strong>, helping scale a fast-growing quick-commerce business across the Gulf.
+    Born and raised in Paris, I’m a <strong>software engineering leader</strong> obsessed with systems thinking, user experience, and the long game. Based in Doha, Qatar, I serve as <strong>Director of Engineering</strong> at <strong>Nology</strong>, helping scale a fast‑growing quick‑commerce platform across the Gulf.
   </p>
 
   <p>
-    Previously, I led the both the Shopping domain and the resiliency chapter at Hungerstation in Saudi Arabia, where I shaped initiatives around the Shopping domain, data consistency, canary analysis, and production observability. Before this, I worked in innoative UAE startups like Propertyfinder, and also in various products company in Paris.  I’m also the founder of a web 3 project, a decentralized data economy protocl that rewards users with tokens for sharing data, built on Solana.
+    I specialize in <strong>distributed systems</strong>, <strong>resilient architectures</strong>, and <strong>engineering strategy</strong>. Previously, I led the Shopping domain and the <strong>Resiliency Chapter</strong> at <strong>Hungerstation</strong> (Saudi Arabia), driving large‑scale improvements in data consistency, canary deployments, and observability.
   </p>
 
   <p>
-    I code mostly in Go, .NET and TypeScript (but consider myself as a polyglot engineer), and I enjoy shipping full-stack projects from concept to production — sometimes overnight. I’m a builder at heart.
+    I’ve engineered core systems in UAE startups like <strong>Property Finder</strong>, contributed to product companies in Paris, and founded a <strong>Web3 project</strong>—a decentralized data economy protocol on <strong>Solana</strong>.
   </p>
+
+  <p>
+    I work primarily with <strong>Go</strong>, <strong>.NET</strong>, and <strong>TypeScript</strong>, and thrive on shipping high‑leverage software from idea to production. I’m a builder at heart—fast, pragmatic, and relentlessly curious.
+  </p>
+
+  <h2>Projects I’ve Built</h2>
+  <ul>
+    <li><a href="https://hungerstation.com/sa-en" target="_blank" rel="noopener">Hungerstation – Saudi Arabia's leading food delivery platform</a></li>
+    <li><a href="https://www.propertyfinder.ae/" target="_blank" rel="noopener">Property Finder – UAE's top real estate marketplace</a></li>
+    <li><a href="https://app.univadis.com/" target="_blank" rel="noopener">Univadis – Medical app used across the World</a></li>
+  </ul>
 
   <h2>Things I Like</h2>
   <ul>
-    <li>Clean, resilient systems</li>
-    <li>Cryptoeconomics & token design</li>
-    <li>Brazilian Jiu-Jitsu (Purple Belt)</li>
+    <li>Elegant, fault‑tolerant systems</li>
+    <li>Cryptoeconomics and token engineering</li>
+    <li>Brazilian Jiu‑Jitsu (Purple Belt)</li>
     <li>Pad Thai</li>
-    <li>Solana & Go</li>
-    <li>Making software that users love</li>
+    <li>Solana, Go, and fast feedback loops</li>
+    <li>Creating software that users genuinely enjoy</li>
   </ul>
 
-  <h2>Last books I read</h2>
+  <h2>Recently Read</h2>
   <ul>
     <li><a href="https://www.manning.com/books/distributed-machine-learning-patterns">Distributed Machine Learning Patterns</a></li>
     <li><a href="https://en.wikipedia.org/wiki/The_Brothers_Karamazov">The Brothers Karamazov</a></li>
@@ -69,12 +137,27 @@
 
   <h2>Elsewhere</h2>
   <ul>
-    <li><a href="https://www.linkedin.com/in/akbouadjadja/">Linkedin</a></li>
+    <li><a href="https://www.linkedin.com/in/akbouadjadja/">LinkedIn</a></li>
     <li><a href="mailto:ak.bouadjadja@gmail.com">Email</a></li>
   </ul>
 
   <div class="footer">
     Last updated August 2025
   </div>
+
+  <script>
+    const root = document.documentElement;
+    function toggleTheme() {
+      const current = root.getAttribute('data-theme');
+      const next = current === 'dark' ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    }
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+      root.setAttribute('data-theme', savedTheme);
+    }
+  </script>
 </body>
 </html>
