@@ -4,16 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Abdelkader Bouadjadja</title>
-  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500&display=block" rel="stylesheet">
+
+  <!-- Inter Tight -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
     :root {
       --bg-light: #ffffff;
-      --text-light: #333333;
-      --bg-dark: #121212;
-      --text-dark: #dddddd;
-      --link-light: #007acc;
-      --link-dark: #66ccff;
-      --accent: #888;
+      --text-light: #121212;
+      --muted-light: rgba(18,18,18,0.68);
+      --border-light: rgba(18,18,18,0.12);
+      --code-bg-light: rgba(18,18,18,0.06);
+
+      --bg-dark: #0f0f10;
+      --text-dark: rgba(255,255,255,0.92);
+      --muted-dark: rgba(255,255,255,0.68);
+      --border-dark: rgba(255,255,255,0.14);
+      --code-bg-dark: rgba(255,255,255,0.08);
+
+      --link-light: #0b62ff;
+      --link-dark: #7ab7ff;
+
+      --radius: 12px;
     }
 
     [data-theme='light'] {
@@ -26,127 +40,242 @@
       color: var(--text-dark);
     }
 
-    [data-theme='dark'] a {
-      color: var(--link-dark);
-    }
+    [data-theme='dark'] a { color: var(--link-dark); }
+    [data-theme='light'] a { color: var(--link-light); }
 
-    [data-theme='light'] a {
-      color: var(--link-light);
-    }
+    * { box-sizing: border-box; }
 
     body {
-      font-family: Lora, Georgia, serif;
-      max-width: 650px;
-      margin: 40px auto;
-      padding: 0 20px;
-      line-height: 1.6;
-      transition: background-color 0.3s, color 0.3s;
+      font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      max-width: 720px;
+      margin: 56px auto;
+      padding: 0 22px;
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+      transition: background-color 0.25s ease, color 0.25s ease;
     }
 
-    h1, h2 {
-      color: inherit;
+    h1 {
+      font-size: 2.05rem;
+      line-height: 1.2;
+      margin: 0 0 18px;
+      letter-spacing: -0.03em;
     }
+
+    h2 {
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 34px 0 12px;
+      opacity: 0.9;
+    }
+
+    p { margin: 0 0 14px; }
+
+    strong { font-weight: 650; }
 
     a {
       text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s ease, opacity 0.15s ease;
     }
 
-    a:hover {
-      text-decoration: underline;
+    a:hover { border-color: currentColor; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
     }
+
+    li { margin: 8px 0; }
 
     code {
-      background-color: #f4f4f4;
-      padding: 2px 4px;
-      border-radius: 3px;
+      background-color: var(--code-bg-light);
+      padding: 2px 6px;
+      border-radius: 8px;
+      font-size: 0.92em;
+    }
+
+    [data-theme='dark'] code { background-color: var(--code-bg-dark); }
+
+    .muted {
+      color: var(--muted-light);
+    }
+
+    [data-theme='dark'] .muted {
+      color: var(--muted-dark);
+    }
+
+    .hr {
+      margin: 26px 0 8px;
+      border: 0;
+      height: 1px;
+      background: var(--border-light);
+    }
+
+    [data-theme='dark'] .hr {
+      background: var(--border-dark);
     }
 
     .footer {
-      margin-top: 40px;
-      font-size: 0.9em;
-      color: var(--accent);
+      margin-top: 42px;
+      font-size: 0.95em;
+      color: var(--muted-light);
+    }
+
+    [data-theme='dark'] .footer {
+      color: var(--muted-dark);
     }
 
     .dark-toggle {
       position: fixed;
-      top: 20px;
-      right: 20px;
-      background-color: rgba(0, 0, 0, 0.05);
-      color: #333333;
-      border: 1px solid #333333;
-      border-radius: 4px;
-      padding: 6px 12px;
-      font-size: 0.9em;
+      top: 18px;
+      right: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-size: 0.92em;
       cursor: pointer;
-      transition: background-color 0.3s, color 0.3s, border 0.3s;
+      border: 1px solid var(--border-light);
+      background: rgba(18,18,18,0.04);
+      color: inherit;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.05s ease;
+      user-select: none;
     }
 
     [data-theme='dark'] .dark-toggle {
-      background-color: rgba(255, 255, 255, 0.1);
-      color: #dddddd;
-      border-color: #666666;
+      border-color: var(--border-dark);
+      background: rgba(255,255,255,0.06);
     }
 
     .dark-toggle:hover {
-      background-color: rgba(255, 255, 255, 0.2);
+      background: rgba(18,18,18,0.07);
+    }
+
+    [data-theme='dark'] .dark-toggle:hover {
+      background: rgba(255,255,255,0.10);
+    }
+
+    .dark-toggle:active { transform: translateY(1px); }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 10px;
+      border: 1px solid var(--border-light);
+      border-radius: 999px;
+      background: rgba(18,18,18,0.03);
+      margin: 0 0 18px;
+      flex-wrap: wrap;
+    }
+
+    [data-theme='dark'] .pill {
+      border-color: var(--border-dark);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .pill span {
+      font-size: 0.95em;
+      color: var(--muted-light);
+    }
+
+    [data-theme='dark'] .pill span { color: var(--muted-dark); }
+
+    .pill b { font-weight: 650; color: inherit; }
+
+    @media (max-width: 520px) {
+      body { margin: 46px auto; }
+      h1 { font-size: 1.85rem; }
+      .dark-toggle { top: 14px; right: 14px; }
     }
   </style>
 </head>
+
 <body>
-  <button class="dark-toggle" onclick="toggleTheme()">Toggle Theme</button>
+  <button class="dark-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+    <span aria-hidden="true">🌓</span>
+    <span>Theme</span>
+  </button>
 
   <h1>Hi, I'm Abdelkader Bouadjadja.</h1>
+
+  <div class="pill" role="note" aria-label="Quick summary">
+    <span><b>Doha</b>, Qatar</span>
+    <span>·</span>
+    <span><b>Chief Technical Officer (CTO)</b> @ Nology</span>
+    <span>·</span>
+    <span>Distributed systems, resilience &amp; business impact</span>
+  </div>
+
   <p>
-    Born and raised in Paris, I’m a <strong>software engineering leader</strong> obsessed with systems thinking, user experience, and the long game. Based in Doha, Qatar, I serve as <strong>Director of Engineering</strong> at <strong>Nology</strong>, helping scale a fast‑growing quick‑commerce platform across the Gulf.
+    Born and raised in Paris, I work on software with a bias toward <strong>systems thinking</strong>,
+    <strong>product clarity</strong>, and the long game. I’m currently based in Doha, Qatar, where I serve as
+    <strong>CTO</strong> at <strong>Nology</strong>, helping scale a fast-growing quick-commerce platform across the Gulf.
   </p>
 
   <p>
-    I specialize in <strong>distributed systems</strong>, <strong>resilient architectures</strong>, and <strong>engineering strategy</strong>. Previously, I led the Shopping domain and the <strong>Resiliency Chapter</strong> at <strong>Hungerstation</strong> (Saudi Arabia), driving large‑scale improvements in data consistency, canary deployments, and observability.
+    My focus is on <strong>distributed systems</strong>, <strong>resilient architecture</strong>, and
+    <strong>engineering strategy</strong>—the parts that determine whether a product survives real traffic,
+    real incidents, and real organizational growth.
   </p>
 
   <p>
-    I’ve engineered core systems in UAE startups like <strong>Property Finder</strong>, contributed to product companies in Paris, and founded a <strong>Web3 project</strong>—a decentralized data economy protocol on <strong>Solana</strong>.
+    Previously, I led the <strong>Shopping domain</strong> and the <strong>Resiliency Chapter</strong> at
+    <strong>Hungerstation</strong> (Saudi Arabia), driving large-scale improvements in data consistency,
+    observability, and progressive delivery (including canary deployments and failure isolation).
   </p>
 
   <p>
-    I work primarily with <strong>Go</strong>, <strong>.NET</strong>, and <strong>TypeScript</strong>, and thrive on shipping high‑leverage software from idea to production. I’m a builder at heart—fast, pragmatic, and relentlessly curious.
+    I’ve also worked on core systems in UAE startups like <strong>Property Finder</strong>, contributed to product
+    companies in Paris, and founded a <strong>Web3 project</strong> exploring decentralized data economies on <strong>Solana</strong>.
   </p>
 
-  <h2>Projects I’ve Built</h2>
+  <p>
+    I work primarily with <strong>Go</strong>, <strong>.NET</strong>, <strong>TypeScript, PostgreSQL and AWS - but I believe computer science fundamentals are avove specific technologies or lanuages.</strong>.
+    I enjoy shipping high-leverage software from idea to production—pragmatic, measurable, and built to last.
+  </p>
+
+  <hr class="hr" />
+
+  <h2>Selected Work</h2>
   <ul>
-    <li><a href="https://hungerstation.com/sa-en" target="_blank" rel="noopener">Hungerstation – Saudi Arabia's leading food delivery platform</a></li>
-    <li><a href="https://www.propertyfinder.ae/" target="_blank" rel="noopener">Property Finder – UAE's top real estate marketplace</a></li>
-    <li><a href="https://app.univadis.com/" target="_blank" rel="noopener">Univadis – Medical app used across the World</a></li>
+    <li><a href="https://hungerstation.com/sa-en" target="_blank" rel="noopener">Hungerstation</a> <span class="muted">— food delivery at scale (Saudi Arabia)</span></li>
+    <li><a href="https://www.propertyfinder.ae/" target="_blank" rel="noopener">Property Finder</a> <span class="muted">— real estate marketplace (UAE)</span></li>
+    <li><a href="https://app.univadis.com/" target="_blank" rel="noopener">Univadis</a> <span class="muted">— medical platform used internationally</span></li>
   </ul>
 
-  <h2>Things I Like</h2>
+  <h2>Interests</h2>
   <ul>
-    <li>Elegant, fault‑tolerant systems</li>
+    <li>Fault-tolerant systems with clear boundaries</li>
     <li>Cryptoeconomics and token engineering</li>
-    <li>Brazilian Jiu‑Jitsu (Purple Belt)</li>
+    <li>Brazilian Jiu-Jitsu <span class="muted">(Purple Belt)</span></li>
     <li>Pad Thai</li>
     <li>Solana, Go, and fast feedback loops</li>
-    <li>Creating software that users genuinely enjoy</li>
+    <li>Software that feels simple because it’s well thought through</li>
   </ul>
 
-  <h2>Recently Read</h2>
+  <h2>Recently Reading</h2>
   <ul>
-    <li><a href="https://www.manning.com/books/distributed-machine-learning-patterns">Distributed Machine Learning Patterns</a></li>
-    <li><a href="https://en.wikipedia.org/wiki/The_Brothers_Karamazov">The Brothers Karamazov</a></li>
+    <li><a href="https://www.manning.com/books/distributed-machine-learning-patterns" target="_blank" rel="noopener">Distributed Machine Learning Patterns</a></li>
+    <li><a href="https://en.wikipedia.org/wiki/The_Brothers_Karamazov" target="_blank" rel="noopener">The Brothers Karamazov</a></li>
   </ul>
 
   <h2>Elsewhere</h2>
   <ul>
-    <li><a href="https://www.linkedin.com/in/akbouadjadja/">LinkedIn</a></li>
+    <li><a href="https://www.linkedin.com/in/akbouadjadja/" target="_blank" rel="noopener">LinkedIn</a></li>
     <li><a href="mailto:ak.bouadjadja@gmail.com">Email</a></li>
   </ul>
 
   <div class="footer">
-    Last updated August 2025
+    Last updated February 2026
   </div>
 
   <script>
     const root = document.documentElement;
+
     function toggleTheme() {
       const current = root.getAttribute('data-theme');
       const next = current === 'dark' ? 'light' : 'dark';
@@ -157,6 +286,10 @@
     const savedTheme = localStorage.getItem('theme');
     if (savedTheme) {
       root.setAttribute('data-theme', savedTheme);
+    } else {
+      // Respect system preference by default
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
     }
   </script>
 </body>
