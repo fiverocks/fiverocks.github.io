@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Abdelkader Bouadjadja</title>
 
-  <!-- Inter Tight -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,20 +13,20 @@
     :root {
       --bg-light: #ffffff;
       --text-light: #121212;
-      --muted-light: rgba(18,18,18,0.68);
+      --muted-light: rgba(18,18,18,0.58);
       --border-light: rgba(18,18,18,0.12);
       --code-bg-light: rgba(18,18,18,0.06);
 
       --bg-dark: #0f0f10;
       --text-dark: rgba(255,255,255,0.92);
-      --muted-dark: rgba(255,255,255,0.68);
+      --muted-dark: rgba(255,255,255,0.58);
       --border-dark: rgba(255,255,255,0.14);
       --code-bg-dark: rgba(255,255,255,0.08);
 
       --link-light: #0b62ff;
       --link-dark: #7ab7ff;
 
-      --radius: 12px;
+      --squircle-radius: 18px;
     }
 
     [data-theme='light'] {
@@ -43,7 +42,7 @@
     [data-theme='dark'] a { color: var(--link-dark); }
     [data-theme='light'] a { color: var(--link-light); }
 
-    * { box-sizing: border-box; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: "Inter Tight", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
@@ -98,13 +97,8 @@
 
     [data-theme='dark'] code { background-color: var(--code-bg-dark); }
 
-    .muted {
-      color: var(--muted-light);
-    }
-
-    [data-theme='dark'] .muted {
-      color: var(--muted-dark);
-    }
+    .muted { color: var(--muted-light); }
+    [data-theme='dark'] .muted { color: var(--muted-dark); }
 
     .hr {
       margin: 26px 0 8px;
@@ -113,9 +107,7 @@
       background: var(--border-light);
     }
 
-    [data-theme='dark'] .hr {
-      background: var(--border-dark);
-    }
+    [data-theme='dark'] .hr { background: var(--border-dark); }
 
     .footer {
       margin-top: 42px;
@@ -123,10 +115,9 @@
       color: var(--muted-light);
     }
 
-    [data-theme='dark'] .footer {
-      color: var(--muted-dark);
-    }
+    [data-theme='dark'] .footer { color: var(--muted-dark); }
 
+    /* ── Dark toggle ── */
     .dark-toggle {
       position: fixed;
       top: 18px;
@@ -141,8 +132,10 @@
       border: 1px solid var(--border-light);
       background: rgba(18,18,18,0.04);
       color: inherit;
+      font-family: inherit;
       transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.05s ease;
       user-select: none;
+      z-index: 100;
     }
 
     [data-theme='dark'] .dark-toggle {
@@ -150,46 +143,349 @@
       background: rgba(255,255,255,0.06);
     }
 
-    .dark-toggle:hover {
-      background: rgba(18,18,18,0.07);
-    }
-
-    [data-theme='dark'] .dark-toggle:hover {
-      background: rgba(255,255,255,0.10);
-    }
-
+    .dark-toggle:hover { background: rgba(18,18,18,0.07); }
+    [data-theme='dark'] .dark-toggle:hover { background: rgba(255,255,255,0.10); }
     .dark-toggle:active { transform: translateY(1px); }
 
+    /* ── Squircle pill ── */
     .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 8px 10px;
-      border: 1px solid var(--border-light);
-      border-radius: 999px;
-      background: rgba(18,18,18,0.03);
-      margin: 0 0 18px;
+      display: flex;
       flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--squircle-radius);
+      background: rgba(18,18,18,0.03);
+      margin: 0 0 20px;
+      /* Squircle feel via subtle shadow */
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 0 0 0.5px rgba(0,0,0,0.04);
     }
 
     [data-theme='dark'] .pill {
       border-color: var(--border-dark);
       background: rgba(255,255,255,0.05);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.2), 0 0 0 0.5px rgba(255,255,255,0.04);
     }
 
-    .pill span {
-      font-size: 0.95em;
+    .pill-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.93em;
+      white-space: nowrap;
+    }
+
+    .pill-item .dot {
+      color: var(--muted-light);
+      font-size: 0.8em;
+    }
+
+    [data-theme='dark'] .pill-item .dot { color: var(--muted-dark); }
+
+    .pill-item span { color: var(--muted-light); }
+    [data-theme='dark'] .pill-item span { color: var(--muted-dark); }
+
+    .pill-item b { font-weight: 650; color: inherit; }
+
+    /* On small screens, hide dots and wrap gracefully */
+    @media (max-width: 540px) {
+      .pill {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .pill-sep { display: none; }
+      .pill-item { font-size: 0.91em; }
+    }
+
+    /* ── Blog article card ── */
+    .blog-card {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      border: 1px solid var(--border-light);
+      border-radius: var(--squircle-radius);
+      background: rgba(18,18,18,0.02);
+      cursor: pointer;
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.1s ease;
+      margin-top: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+      text-decoration: none;
+      color: inherit;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    [data-theme='dark'] .blog-card {
+      border-color: var(--border-dark);
+      background: rgba(255,255,255,0.03);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.18);
+    }
+
+    .blog-card:hover {
+      background: rgba(18,18,18,0.05);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+      transform: translateY(-1px);
+      border-color: rgba(18,18,18,0.2);
+    }
+
+    [data-theme='dark'] .blog-card:hover {
+      background: rgba(255,255,255,0.07);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+      border-color: rgba(255,255,255,0.22);
+    }
+
+    .blog-card-text { flex: 1; min-width: 0; }
+
+    .blog-card-title {
+      font-weight: 650;
+      font-size: 0.98em;
+      letter-spacing: -0.01em;
+      line-height: 1.35;
+      margin-bottom: 4px;
+    }
+
+    .blog-card-meta {
+      font-size: 0.88em;
+      color: var(--muted-light);
+      margin: 0;
+    }
+
+    [data-theme='dark'] .blog-card-meta { color: var(--muted-dark); }
+
+    .blog-card-arrow {
+      font-size: 1.1em;
+      color: var(--muted-light);
+      flex-shrink: 0;
+      margin-top: 2px;
+      transition: transform 0.18s ease;
+    }
+
+    [data-theme='dark'] .blog-card-arrow { color: var(--muted-dark); }
+    .blog-card:hover .blog-card-arrow { transform: translate(2px, -2px); }
+
+    /* ── Popup overlay ── */
+    .popup-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      z-index: 200;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding: 0;
+      pointer-events: none;
+      transition: background 0.35s ease;
+    }
+
+    .popup-overlay.open {
+      background: rgba(0,0,0,0.48);
+      pointer-events: all;
+    }
+
+    [data-theme='dark'] .popup-overlay.open { background: rgba(0,0,0,0.68); }
+
+    /* ── Popup panel ── */
+    .popup-panel {
+      width: 100%;
+      max-width: 760px;
+      max-height: 88vh;
+      background: var(--bg-light);
+      border-radius: 24px 24px 0 0;
+      border-top: 1px solid var(--border-light);
+      border-left: 1px solid var(--border-light);
+      border-right: 1px solid var(--border-light);
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.42s cubic-bezier(0.32, 0.72, 0, 1);
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.12), 0 -1px 0 rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+
+    [data-theme='dark'] .popup-panel {
+      background: #18181a;
+      border-color: var(--border-dark);
+      box-shadow: 0 -8px 40px rgba(0,0,0,0.5);
+    }
+
+    .popup-overlay.open .popup-panel {
+      transform: translateY(0);
+    }
+
+    /* Drag handle */
+    .popup-handle {
+      width: 40px;
+      height: 4px;
+      border-radius: 99px;
+      background: var(--border-light);
+      margin: 12px auto 0;
+      flex-shrink: 0;
+      cursor: grab;
+    }
+
+    [data-theme='dark'] .popup-handle { background: var(--border-dark); }
+
+    /* Popup header */
+    .popup-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 16px 24px 12px;
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    [data-theme='dark'] .popup-header { border-color: var(--border-dark); }
+
+    .popup-header-text { flex: 1; }
+
+    .popup-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.025em;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+
+    .popup-byline {
+      font-size: 0.88em;
       color: var(--muted-light);
     }
 
-    [data-theme='dark'] .pill span { color: var(--muted-dark); }
+    [data-theme='dark'] .popup-byline { color: var(--muted-dark); }
 
-    .pill b { font-weight: 650; color: inherit; }
+    .popup-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid var(--border-light);
+      background: rgba(18,18,18,0.04);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      color: inherit;
+      flex-shrink: 0;
+      transition: background 0.15s ease, transform 0.1s ease;
+      font-family: inherit;
+    }
+
+    [data-theme='dark'] .popup-close {
+      border-color: var(--border-dark);
+      background: rgba(255,255,255,0.06);
+    }
+
+    .popup-close:hover { background: rgba(18,18,18,0.09); transform: scale(1.08); }
+    [data-theme='dark'] .popup-close:hover { background: rgba(255,255,255,0.12); }
+    .popup-close:active { transform: scale(0.95); }
+
+    /* Popup scrollable body */
+    .popup-body {
+      overflow-y: auto;
+      padding: 24px 24px 40px;
+      flex: 1;
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
+    }
+
+    .popup-body::-webkit-scrollbar { width: 5px; }
+    .popup-body::-webkit-scrollbar-track { background: transparent; }
+    .popup-body::-webkit-scrollbar-thumb {
+      background: var(--border-light);
+      border-radius: 99px;
+    }
+
+    [data-theme='dark'] .popup-body::-webkit-scrollbar-thumb { background: var(--border-dark); }
+
+    /* Article content styles */
+    .article-content h2 {
+      font-size: 1rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      margin: 28px 0 10px;
+      opacity: 0.75;
+    }
+
+    .article-content h3 {
+      font-size: 1.05rem;
+      font-weight: 650;
+      letter-spacing: -0.01em;
+      margin: 22px 0 8px;
+    }
+
+    .article-content p {
+      margin: 0 0 14px;
+      line-height: 1.7;
+      font-size: 0.97em;
+    }
+
+    .article-content ul {
+      margin: 8px 0 14px;
+      padding-left: 18px;
+    }
+
+    .article-content li {
+      margin: 6px 0;
+      font-size: 0.97em;
+      line-height: 1.6;
+    }
+
+    .article-content pre {
+      background: var(--code-bg-light);
+      border: 1px solid var(--border-light);
+      border-radius: 12px;
+      padding: 14px 16px;
+      overflow-x: auto;
+      margin: 14px 0;
+      font-size: 0.88em;
+      line-height: 1.6;
+    }
+
+    [data-theme='dark'] .article-content pre {
+      background: var(--code-bg-dark);
+      border-color: var(--border-dark);
+    }
+
+    .article-content code {
+      background: none;
+      padding: 0;
+      font-size: 1em;
+    }
+
+    .article-content blockquote {
+      border-left: 3px solid var(--border-light);
+      padding-left: 14px;
+      margin: 16px 0;
+      font-style: italic;
+      color: var(--muted-light);
+    }
+
+    [data-theme='dark'] .article-content blockquote {
+      border-color: var(--border-dark);
+      color: var(--muted-dark);
+    }
+
+    .article-content .article-hr {
+      margin: 22px 0 8px;
+      border: 0;
+      height: 1px;
+      background: var(--border-light);
+    }
+
+    [data-theme='dark'] .article-content .article-hr { background: var(--border-dark); }
 
     @media (max-width: 520px) {
       body { margin: 46px auto; }
       h1 { font-size: 1.85rem; }
       .dark-toggle { top: 14px; right: 14px; }
+      .popup-panel { max-height: 93vh; border-radius: 20px 20px 0 0; }
+      .popup-header { padding: 14px 18px 12px; }
+      .popup-body { padding: 18px 18px 36px; }
     }
   </style>
 </head>
@@ -202,50 +498,67 @@
 
   <h1>Hi, I'm Abdelkader Bouadjadja.</h1>
 
+  <!-- Fixed squircle pill ~ wraps gracefully on mobile -->
   <div class="pill" role="note" aria-label="Quick summary">
-    <span><b>Doha</b>, Qatar</span>
-    <span>·</span>
-    <span><b>Chief Technical Officer (CTO)</b> @ Nology</span>
-    <span>·</span>
-    <span>Distributed systems, resilience &amp; business impact</span>
+    <div class="pill-item">
+      <b>Doha</b><span>, Qatar</span>
+    </div>
+    <span class="pill-sep muted">·</span>
+    <div class="pill-item">
+      <b>CTO</b><span> @ Nology</span>
+    </div>
+    <span class="pill-sep muted">·</span>
+    <div class="pill-item">
+      <span>Distributed systems &amp; resilience</span>
+    </div>
   </div>
 
   <p>
     Born and raised in Paris, I work on software with a bias toward <strong>systems thinking</strong>,
-    <strong>product clarity</strong>, and the long game. I’m currently based in Doha, Qatar, where I serve as
+    <strong>product clarity</strong>, and the long game. I'm currently based in Doha, Qatar, where I serve as
     <strong>CTO</strong> at <strong>Nology</strong>, helping scale a fast-growing quick-commerce platform across the Gulf.
   </p>
 
   <p>
     My focus is on <strong>distributed systems</strong>, <strong>resilient architecture</strong>, and
-    <strong>engineering strategy</strong>—the parts that determine whether a product survives real traffic,
+    <strong>engineering strategy</strong>~the parts that determine whether a product survives real traffic,
     real incidents, and real organizational growth.
   </p>
 
   <p>
-    Previously, I led the <strong>Shopping domain</strong> and the <strong>Resiliency Chapter</strong> at
-    <strong>Hungerstation</strong> (Saudi Arabia), driving large-scale improvements in data consistency,
-    observability, and progressive delivery (including canary deployments and failure isolation).
+    Previously, I led the <strong>Shopping domain</strong> and the <strong>Resiliency Chapter</strong> at a large food delivery platform in Saudi Arabia, driving large-scale improvements in data consistency,
+    observability, and progressive delivery~including canary deployments and failure isolation.
   </p>
 
   <p>
-    I’ve also worked on core systems in UAE startups like <strong>Property Finder</strong>, contributed to product
+    I've also worked on core systems at a leading real estate marketplace in the UAE, contributed to product
     companies in Paris, and founded a <strong>Web3 project</strong> exploring decentralized data economies on <strong>Solana</strong>.
   </p>
 
   <p>
-    I work primarily with <strong>Go</strong>, <strong>.NET</strong>, <strong>TypeScript, PostgreSQL and AWS - but I believe computer science fundamentals are avove specific technologies or lanuages.</strong>.
-    I enjoy shipping high-leverage software from idea to production—pragmatic, measurable, and built to last.
+    I work primarily with <strong>Go</strong>, <strong>.NET</strong>, and <strong>TypeScript</strong>~but I believe computer science fundamentals sit above any specific technology or language. I enjoy shipping high-leverage software from idea to production: pragmatic, measurable, and built to last.
   </p>
 
   <hr class="hr" />
 
   <h2>Selected Work</h2>
   <ul>
-    <li><a href="https://hungerstation.com/sa-en" target="_blank" rel="noopener">Hungerstation</a> <span class="muted">— food delivery at scale (Saudi Arabia)</span></li>
-    <li><a href="https://www.propertyfinder.ae/" target="_blank" rel="noopener">Property Finder</a> <span class="muted">— real estate marketplace (UAE)</span></li>
-    <li><a href="https://app.univadis.com/" target="_blank" rel="noopener">Univadis</a> <span class="muted">— medical platform used internationally</span></li>
+    <li><a href="https://hungerstation.com/sa-en" target="_blank" rel="noopener">Hungerstation</a> <span class="muted">~ food delivery at scale (Saudi Arabia)</span></li>
+    <li><a href="https://www.propertyfinder.ae/" target="_blank" rel="noopener">Property Finder</a> <span class="muted">~ real estate marketplace (UAE)</span></li>
+    <li><a href="https://app.univadis.com/" target="_blank" rel="noopener">Univadis</a> <span class="muted">~ medical platform used internationally</span></li>
   </ul>
+
+  <h2>Writing</h2>
+
+  <div class="blog-card" onclick="openArticle()" role="button" tabindex="0"
+       aria-label="Open article: When Reads Became the Bottleneck"
+       onkeydown="if(event.key==='Enter'||event.key===' ')openArticle()">
+    <div class="blog-card-text">
+      <div class="blog-card-title">When Reads Became the Bottleneck</div>
+      <p class="blog-card-meta">How rethinking the read path changed everything · February 2026</p>
+    </div>
+    <span class="blog-card-arrow" aria-hidden="true">↗</span>
+  </div>
 
   <h2>Interests</h2>
   <ul>
@@ -254,7 +567,7 @@
     <li>Brazilian Jiu-Jitsu <span class="muted">(Purple Belt)</span></li>
     <li>Pad Thai</li>
     <li>Solana, Go, and fast feedback loops</li>
-    <li>Software that feels simple because it’s well thought through</li>
+    <li>Software that feels simple because it's well thought through</li>
   </ul>
 
   <h2>Recently Reading</h2>
@@ -273,12 +586,174 @@
     Last updated February 2026
   </div>
 
+  <!-- ── Article popup ── -->
+  <div class="popup-overlay" id="popupOverlay" role="dialog" aria-modal="true"
+       aria-label="Article" onclick="handleOverlayClick(event)">
+    <div class="popup-panel" id="popupPanel">
+      <div class="popup-handle" aria-hidden="true"></div>
+
+      <div class="popup-header">
+        <div class="popup-header-text">
+          <div class="popup-title">When Reads Became the Bottleneck</div>
+          <div class="popup-byline">Abdelkader Bouadjadja · February 2026 · 8 min read</div>
+        </div>
+        <button class="popup-close" onclick="closeArticle()" aria-label="Close article">✕</button>
+      </div>
+
+      <div class="popup-body">
+        <article class="article-content">
+
+          <p>
+            Between 2020 and 2025, I was part of the engineering leadership at <strong>Hungerstation</strong> ~ at the time one of the largest food and grocery delivery platforms in Saudi Arabia, operating across dozens of cities with millions of active users. When I joined, the platform was already at significant scale. By the time I left, order volume had grown roughly <strong>8×</strong>.
+          </p>
+          <p>
+            That kind of growth doesn't happen in a vacuum. It compresses every latent weakness in your architecture into something urgent. Queries that were slightly slow become completely unacceptable. Patterns that were fine at 1× traffic become existential at 8×. The system stops rewarding optimism and starts demanding honesty.
+          </p>
+          <p>
+            One of the most persistent and consequential problems we faced was deceptively simple to describe: <strong>we were reading too much, too often, from the wrong place</strong>.
+          </p>
+          <p>
+            At a platform serving two very different product worlds ~ food delivery and grocery ~ almost every user interaction fans out into multiple read paths before anything meaningful happens. Search results, category pages, availability checks, pricing rules, eligibility constraints, campaign logic, compliance rules. Writes matter, but reads are where the system lives or dies.
+          </p>
+          <p>
+            For a long time, the architecture held up. Then it didn't.
+          </p>
+
+          <hr class="article-hr" />
+          <h2>The First Signs of Tension</h2>
+
+          <p>Nothing broke overnight. There was no single incident, no dramatic outage, no obvious failure that forced an immediate rewrite. Instead, we started seeing patterns that made us uncomfortable:</p>
+          <ul>
+            <li>Latency percentiles creeping up during peak traffic</li>
+            <li>Read replicas becoming more sensitive to bursts</li>
+            <li>Small changes in load producing disproportionate impact</li>
+          </ul>
+          <p>
+            Individually, none of these were alarming. Together, they pointed to a deeper issue: our read path was becoming structurally coupled to database pressure. The usual playbook still works at this stage ~ add replicas, tune queries, cache responses, buy time. But buying time is not the same as buying resiliency.
+          </p>
+
+          <hr class="article-hr" />
+          <h2>Stepping Back: What Are We Really Doing?</h2>
+
+          <p>We paused and forced ourselves to restate the problem in plain terms. Most of our read-heavy flows depend on data that:</p>
+          <ul>
+            <li>Changes infrequently compared to request volume</li>
+            <li>Is highly structured</li>
+            <li>Is filtered and combined in predictable ways</li>
+          </ul>
+          <p>Yet we were re-reading that data from disk, repeatedly, under load, for every request. That raised a simple but uncomfortable question:</p>
+          <blockquote>Why are we relying on database reads in the hot path when the data itself is largely stable and deterministic?</blockquote>
+          <p>That question pushed us away from incremental optimizations and toward a more fundamental rethink.</p>
+
+          <hr class="article-hr" />
+          <h2>The Decision: Treat Products as In-Memory State</h2>
+
+          <p>The idea we landed on was deliberately bold:</p>
+          <ul>
+            <li>Every pod loads the full active product dataset at startup</li>
+            <li>Data lives in memory ~ not as a cache, but as authoritative state</li>
+            <li>Reads become pure computation</li>
+            <li>Database access moves out of the critical path</li>
+          </ul>
+          <p>
+            This was not a decision we took lightly. But it offered something compelling: <strong>predictability</strong>.
+          </p>
+
+          <hr class="article-hr" />
+          <h2>How This Works in a Kubernetes Environment</h2>
+
+          <p>Each pod follows a strict lifecycle:</p>
+          <ul>
+            <li><strong>Startup:</strong> full synchronization before serving any traffic ~ build in-memory structures, validate consistency, only then mark ready. No partial readiness, no warm-up while serving.</li>
+            <li><strong>Running:</strong> updates applied incrementally. Product changes streamed as events, applied atomically in memory. No full reloads, no blocking operations.</li>
+            <li><strong>Failure:</strong> pods remain disposable. If one dies, it restarts and rebuilds state deterministically. Resiliency comes from clean rebuild, not preserved state.</li>
+          </ul>
+
+          <hr class="article-hr" />
+          <h2>Filtering Without the Database: Roaring Bitmaps</h2>
+
+          <p>
+            Once data lives in memory, the problem shifts from querying to computing. Naïve in-memory filtering doesn't scale ~ iterating over thousands of products per request with branching logic quickly becomes CPU-heavy and unpredictable.
+          </p>
+          <p>
+            This is where <strong>Roaring Bitmaps</strong> became central to the design. A Roaring Bitmap is a compressed data structure for representing large sets of integers efficiently. More importantly, it enables extremely fast set operations: AND, OR, NOT.
+          </p>
+          <p>
+            Each product is represented by an integer ID. Each filter dimension ~ availability, category, eligibility, flow constraints ~ is a bitmap. At request time, filtering becomes bitmap intersections. The CPU does the work, in a way that is highly optimized and cache-friendly:
+          </p>
+<pre><code>// Precomputed structures
+active   := roaring.Bitmap
+byCity   := map[int]*roaring.Bitmap
+byCategory := map[int]*roaring.Bitmap
+
+func eligibleProducts(cityID, categoryID int) []int {
+    result := roaring.And(
+        active,
+        byCity[cityID],
+        byCategory[categoryID],
+    )
+    return result.ToArray()
+}</code></pre>
+          <p>Reads become deterministic, in-memory computation. Latency becomes a function of CPU, not I/O contention.</p>
+
+          <hr class="article-hr" />
+          <h2>What Changed for Resiliency</h2>
+
+          <p>
+            The most immediate impact was on system behavior under load. Traffic spikes no longer translated into database stress. The read path scaled with CPU. The database didn't disappear ~ but it stopped being the first thing to suffer when traffic increased. That alone significantly reduced blast radius.
+          </p>
+          <p>
+            Perhaps more importantly, the system became <strong>easier to reason about</strong>. We could model worst-case behavior, test rebuild scenarios, and understand failure modes with much more clarity than before.
+          </p>
+
+          <hr class="article-hr" />
+          <h2>Tradeoffs We Accepted Deliberately</h2>
+
+          <p>This approach is not free:</p>
+          <ul>
+            <li>Memory usage per pod is higher</li>
+            <li>Startup logic is more complex</li>
+            <li>Correctness of synchronization mechanisms becomes critical</li>
+            <li>New classes of bugs become possible</li>
+          </ul>
+          <p>
+            We believe there is no perfect solution in engineering. Every architecture shifts complexity somewhere. Moving complexity into memory management and rebuild logic was a better fit for us than continuing to push the database harder. We chose this balance because it aligned with our traffic patterns, our product constraints, and our ability to reason about the system as it grows.
+          </p>
+
+          <hr class="article-hr" />
+          <h2>How a Small Team Made This Work</h2>
+
+          <p>
+            This wasn't about heroics or brute force. We kept scope intentionally small at first, focusing only on the read paths that mattered most. We rolled out progressively, observed under real traffic, and expanded carefully.
+          </p>
+          <p>
+            We spent a disproportionate amount of time defining <strong>invariants</strong>: what must always be true, what happens on restarts, what "ready" really means. Those constraints shaped the design more than any single optimization. And we were honest about failure modes ~ we assumed things would go wrong and designed for recovery, not perfection.
+          </p>
+          <p>
+            That discipline ~ more than any specific technology ~ is what allowed a team of a few engineers to ship this safely.
+          </p>
+
+          <hr class="article-hr" />
+          <h2>Closing Thought</h2>
+
+          <p>
+            Scaling databases is often the first instinct. Sometimes, the better question is whether the database should be in the critical path at all.
+          </p>
+          <p>
+            Resiliency isn't a milestone you reach. It's something you keep earning as the system evolves.
+          </p>
+
+        </article>
+      </div>
+    </div>
+  </div>
+
   <script>
+    /* ── Theme ── */
     const root = document.documentElement;
 
     function toggleTheme() {
-      const current = root.getAttribute('data-theme');
-      const next = current === 'dark' ? 'light' : 'dark';
+      const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       localStorage.setItem('theme', next);
     }
@@ -287,10 +762,53 @@
     if (savedTheme) {
       root.setAttribute('data-theme', savedTheme);
     } else {
-      // Respect system preference by default
       const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
       root.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
     }
+
+    /* ── Article popup ── */
+    const overlay = document.getElementById('popupOverlay');
+    const panel   = document.getElementById('popupPanel');
+    let isOpen = false;
+
+    function openArticle() {
+      isOpen = true;
+      overlay.classList.add('open');
+      document.body.style.overflow = 'hidden';
+      // Reset scroll position
+      panel.querySelector('.popup-body').scrollTop = 0;
+      // Trap focus
+      setTimeout(() => panel.querySelector('.popup-close').focus(), 420);
+    }
+
+    function closeArticle() {
+      isOpen = false;
+      overlay.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    function handleOverlayClick(e) {
+      // Close only when clicking the backdrop itself, not the panel
+      if (e.target === overlay) closeArticle();
+    }
+
+    // Keyboard: Escape to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen) closeArticle();
+    });
+
+    /* ── Swipe down to close on mobile ── */
+    let startY = 0;
+    panel.addEventListener('touchstart', (e) => {
+      startY = e.touches[0].clientY;
+    }, { passive: true });
+
+    panel.addEventListener('touchend', (e) => {
+      const deltaY = e.changedTouches[0].clientY - startY;
+      const body = panel.querySelector('.popup-body');
+      // Only close if swiping down AND body is scrolled to top
+      if (deltaY > 60 && body.scrollTop === 0) closeArticle();
+    }, { passive: true });
   </script>
 </body>
 </html>
